@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Dulce Click: repostería artesanal. Pasteles, cupcakes, postres y galletas con entrega a domicilio."/>
+<title>Dulce Click | Repostería artesanal</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+html{scroll-behavior:smooth}
+body{background:#fdf2f2;overflow-x:hidden;color:#5a3d3d}
+.container{display:flex;min-height:100vh}
+.sidebar{width:260px;background:#fff7f7;padding:30px 20px;position:fixed;height:100%;box-shadow:2px 0 15px rgba(0,0,0,.05);animation:slideLeft 1s ease;z-index:20;overflow-y:auto}
+@keyframes slideLeft{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+.logo{text-align:center;margin-bottom:30px}
+.logo h1{font-size:50px;color:#6b2f2f;line-height:55px}
+.logo span{color:#ff7ea8}
+.logo p{color:#777;margin-top:10px;font-size:14px}
+.menu{list-style:none}
+.menu li{margin:8px 0}
+.menu a{text-decoration:none;color:#5a3d3d;font-size:17px;display:flex;align-items:center;gap:15px;padding:12px 15px;border-radius:15px;transition:.3s}
+.menu a:hover,.menu a.active{background:#ffd6df;transform:translateX(8px);color:#ff4f88}
+.menu a:focus-visible,.btn:focus-visible,button:focus-visible{outline:3px solid #ff4f88;outline-offset:2px}
+.main{margin-left:280px;padding:30px;width:calc(100% - 280px)}
+.topbar{display:none}
+
+/* PROMO */
+.promo{background:linear-gradient(90deg,#ff7ca5,#ffb36b);color:#fff;text-align:center;padding:10px;border-radius:20px;margin-bottom:20px;font-weight:500;font-size:15px}
+.promo b{background:#fff;color:#ff4d84;padding:2px 10px;border-radius:12px;margin:0 4px}
+
+/* HERO */
+.hero{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:30px;padding:50px;box-shadow:0 10px 30px rgba(0,0,0,.06);overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;width:500px;height:500px;background:#ffd7e2;border-radius:50%;right:-120px;top:-100px}
+.hero-text{z-index:1;max-width:500px;animation:fadeUp 1.2s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:none}}
+.hero-text h2{font-size:54px;color:#5b2e2e;line-height:66px}
+.hero-text span{color:#ff7ca5}
+.hero-text p{margin:20px 0;color:#666;font-size:18px}
+.btn{display:inline-block;background:#ff7ca5;color:#fff;padding:15px 35px;border-radius:40px;text-decoration:none;font-weight:600;transition:.3s;border:0;cursor:pointer;font-size:16px}
+.btn:hover{background:#ff4d84;transform:scale(1.06)}
+.hero img{width:420px;max-width:100%;z-index:1;border-radius:30px;animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-15px)}}
+
+/* CATALOGO */
+.title{text-align:center;margin:60px 0 10px;color:#6b2f2f;font-size:38px}
+.subtitle{text-align:center;color:#888;margin-bottom:25px}
+.tools{display:flex;flex-wrap:wrap;gap:15px;justify-content:space-between;align-items:center;margin-bottom:25px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{background:#fff;border:2px solid #ffd6df;color:#6b2f2f;padding:8px 20px;border-radius:30px;cursor:pointer;font-size:14px;font-weight:500;transition:.3s}
+.chip:hover{background:#ffe7ed}
+.chip.active{background:#ff7ca5;border-color:#ff7ca5;color:#fff}
+.search{position:relative}
+.search input{padding:11px 18px 11px 42px;border-radius:30px;border:2px solid #ffd6df;outline:none;width:240px;font-size:14px}
+.search input:focus{border-color:#ff7ca5}
+.search i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#ff7ca5}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
+.card{background:#fff;border-radius:25px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.07);transition:.4s;position:relative;animation:fadeUp .6s ease}
+.card:hover{transform:translateY(-10px);box-shadow:0 15px 30px rgba(0,0,0,.12)}
+.card .imgbox{overflow:hidden;height:220px;background:#ffd7e2}
+.card img{width:100%;height:100%;object-fit:cover;transition:.5s}
+.card:hover img{transform:scale(1.08)}
+.tag{position:absolute;top:12px;left:12px;background:#fff;color:#ff4d84;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px}
+.fav{position:absolute;top:10px;right:10px;background:#fff;border:0;width:38px;height:38px;border-radius:50%;cursor:pointer;color:#bbb;font-size:16px;transition:.3s}
+.fav:hover{transform:scale(1.15)}
+.fav.on{color:#ff4d84}
+.card-content{padding:20px}
+.card-content h3{color:#5d2e2e;margin-bottom:8px}
+.card-content p{color:#777;font-size:14px;margin-bottom:15px;min-height:42px}
+.price{display:flex;justify-content:space-between;align-items:center}
+.price span{color:#ff5d8f;font-size:22px;font-weight:700}
+.cart{background:#ff7ea8;color:#fff;width:45px;height:45px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;transition:.4s;border:0;font-size:16px}
+.cart:hover{transform:rotate(360deg);background:#ff4b86}
+.empty{grid-column:1/-1;text-align:center;color:#999;padding:40px}
+
+/* BENEFICIOS */
+.benefits{margin-top:60px;background:#ffe7ed;border-radius:30px;padding:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px}
+.benefit{text-align:center;transition:.4s}
+.benefit:hover{transform:translateY(-8px)}
+.benefit i{font-size:48px;color:#ff7ea8;margin-bottom:15px}
+.benefit h4{color:#6b2f2f;margin-bottom:8px}
+.benefit p{color:#666;font-size:14px}
+.contact{margin-top:50px;background:#fff;border-radius:30px;padding:40px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.05)}
+.contact h2{color:#6b2f2f;margin-bottom:10px}
+.contact p{color:#777;margin-bottom:20px}
+.contact .btn+.btn{background:#6b2f2f;margin-left:8px}
+footer{margin-top:40px;text-align:center;color:#6b2f2f;padding:30px;font-size:16px}
+
+/* CARRITO */
+.fab{position:fixed;right:25px;bottom:25px;width:62px;height:62px;border-radius:50%;background:#ff4d84;color:#fff;border:0;font-size:24px;cursor:pointer;box-shadow:0 8px 20px rgba(255,77,132,.45);z-index:30;transition:.3s}
+.fab:hover{transform:scale(1.1)}
+.fab b{position:absolute;top:-4px;right:-4px;background:#6b2f2f;color:#fff;font-size:12px;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+.drawer{position:fixed;top:0;right:0;width:380px;max-width:100%;height:100%;background:#fff;z-index:40;transform:translateX(100%);transition:.4s;display:flex;flex-direction:column;box-shadow:-5px 0 25px rgba(0,0,0,.15)}
+.drawer.open{transform:none}
+.drawer header{padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ffe0e8}
+.drawer header h3{color:#6b2f2f}
+.drawer header button{background:none;border:0;font-size:22px;cursor:pointer;color:#6b2f2f}
+.items{flex:1;overflow-y:auto;padding:15px 20px}
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed #ffd6df}
+.item img{width:56px;height:56px;border-radius:12px;object-fit:cover}
+.item div{flex:1;font-size:14px}
+.item small{color:#ff5d8f;font-weight:600}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:26px;height:26px;border-radius:50%;border:0;background:#ffd6df;color:#6b2f2f;cursor:pointer;font-weight:700}
+.drawer footer{margin:0;padding:20px;border-top:1px solid #ffe0e8;text-align:left}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:20px;margin-bottom:15px;color:#6b2f2f}
+.drawer .btn{width:100%;text-align:center}
+.veil{position:fixed;inset:0;background:rgba(60,20,20,.4);z-index:35;opacity:0;pointer-events:none;transition:.3s}
+.veil.open{opacity:1;pointer-events:auto}
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,120px);background:#6b2f2f;color:#fff;padding:12px 24px;border-radius:30px;z-index:70;transition:.4s;font-size:14px}
+.toast.show{transform:translate(-50%,0)}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);animation:none;transition:.4s;box-shadow:none}
+  .sidebar.open{transform:none;box-shadow:5px 0 25px rgba(0,0,0,.2)}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+  .topbar h1{font-size:26px;color:#6b2f2f}.topbar h1 span{color:#ff7ea8}
+  .topbar button{background:#fff;border:0;width:44px;height:44px;border-radius:12px;font-size:20px;color:#6b2f2f;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+  .main{margin-left:0;width:100%;padding:18px}
+  .hero{flex-direction:column;text-align:center;padding:30px}
+  .hero img{margin-top:30px;max-width:320px}
+  .hero-text h2{font-size:38px;line-height:48px}
+  .search input{width:100%}.search{width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* NEGOCIOS ALIADOS Y MODALES */
+.modal{position:fixed;inset:0;background:rgba(60,20,20,.5);z-index:60;display:none;align-items:center;justify-content:center;padding:15px}
+.modal.open{display:flex}
+.box{background:#fff;border-radius:25px;padding:30px;width:620px;max-width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.box h3{color:#6b2f2f;margin-bottom:8px;padding-right:30px}.box h4{margin:16px 0 8px;color:#6b2f2f}
+.box .x{position:absolute;top:10px;right:16px;background:none;border:0;font-size:30px;cursor:pointer;color:#6b2f2f}
+.box input,.box textarea{width:100%;padding:10px 14px;border:2px solid #ffd6df;border-radius:14px;margin:4px 0 10px;font-size:14px;outline:none}
+.box input:focus,.box textarea:focus{border-color:#ff7ca5}
+.box label{display:block;font-size:13px;color:#777}
+.mut{color:#888;font-size:14px;margin-bottom:14px}
+.row{display:grid;grid-template-columns:1fr 100px;gap:0 8px;padding:10px 10px 4px;background:#fff7f7;border-radius:14px;margin-bottom:8px}
+.row input:nth-child(n+3){grid-column:1/-1}
+.row button{grid-column:1/-1;justify-self:end;background:none;border:0;cursor:pointer;margin-bottom:4px}
+.row2{display:flex;gap:8px;align-items:flex-start}.row2 input{flex:1}.row2 .btn{white-space:nowrap}
+.pi{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed #ffd6df;font-size:14px}
+.pi>div{flex:1}.pi img,.ph{width:52px;height:52px;border-radius:12px;object-fit:cover;background:#ffd7e2;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pi span{color:#ff5d8f;font-weight:700}
+.btn.sm{padding:8px 16px;font-size:13px}.btn.ghost{background:#fff;color:#ff4d84;border:2px solid #ff7ca5}.btn.danger{background:#b23a48}
+.box .btn{margin:6px 6px 0 0}
+.tag2{display:inline-block;background:#ffe7ed;color:#ff4d84;font-size:12px;font-weight:600;padding:3px 12px;border-radius:20px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo"><h1>Dulce <span>Click</span></h1><p>Repostería artesanal</p></div>
+  <ul class="menu" id="menu">
+    <li><a href="#inicio" class="active"><i class="fa-solid fa-house"></i> Inicio</a></li>
+    <li><a href="#catalogo" data-cat="Pasteles"><i class="fa-solid fa-cake-candles"></i> Pasteles</a></li>
+    <li><a href="#catalogo" data-cat="Cupcakes"><i class="fa-solid fa-cookie"></i> Cupcakes</a></li>
+    <li><a href="#catalogo" data-cat="Postres"><i class="fa-solid fa-ice-cream"></i> Postres</a></li>
+    <li><a href="#catalogo" data-cat="Galletas"><i class="fa-solid fa-cookie-bite"></i> Galletas</a></li>
+    <li><a href="#catalogo" data-cat="Personalizados"><i class="fa-solid fa-gift"></i> Personalizados</a></li>
+    <li><a href="#negocios"><i class="fa-solid fa-store"></i> Negocios aliados</a></li>
+    <li><a href="#nosotros"><i class="fa-solid fa-heart"></i> Sobre nosotros</a></li>
+    <li><a href="#contacto"><i class="fa-solid fa-phone"></i> Contacto</a></li>
+    <li><a href="#" id="openPub"><i class="fa-solid fa-upload"></i> Publicar catálogo</a></li>
+    <li><a href="#" id="openOwner"><i class="fa-solid fa-key"></i> Panel del dueño</a></li>
+  </ul>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <h1>Dulce <span>Click</span></h1>
+    <button id="burger" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+  </div>
+
+  <div class="promo">🎉 Promo de bienvenida: usa el código <b>DULCE10</b> y llévate 10% de descuento</div>
+
+  <section class="hero" id="inicio">
+    <div class="hero-text">
+      <h2>Endulza tus momentos, <span>hazlo con un solo click</span></h2>
+      <p>Repostería artesanal hecha con amor para cada ocasión especial.</p>
+      <a href="#catalogo" class="btn">Ver catálogo</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=900&auto=format&fit=crop" alt="Pastel artesanal decorado">
+  </section>
+
+  <h2 class="title" id="catalogo">Nuestros Productos</h2>
+  <p class="subtitle">Filtra por categoría, busca tu antojo y agrégalo al carrito.</p>
+
+  <div class="tools">
+    <div class="chips" id="chips"></div>
+    <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="q" type="search" placeholder="Buscar postres..." aria-label="Buscar productos"></div>
+  </div>
+  <section class="products" id="products"></section>
+
+  <h2 class="title" id="negocios">Negocios aliados</h2>
+  <p class="subtitle">Emprendedores que publican su catálogo aquí con autorización del dueño de la página.</p>
+  <section class="products" id="biz"></section>
+  <div style="text-align:center;margin-top:25px"><button class="btn" id="openPub2">Quiero publicar mi catálogo</button></div>
+
+  <section class="benefits" id="nosotros">
+    <div class="benefit"><i class="fa-solid fa-heart"></i><h4>Ingredientes de calidad</h4><p>Seleccionamos lo mejor para ti.</p></div>
+    <div class="benefit"><i class="fa-solid fa-hand-holding-heart"></i><h4>Hecho con amor</h4><p>Cada detalle es preparado artesanalmente.</p></div>
+    <div class="benefit"><i class="fa-solid fa-box"></i><h4>Empaque seguro</h4><p>Tus pedidos llegan perfectos.</p></div>
+    <div class="benefit"><i class="fa-solid fa-truck"></i><h4>Entregas rápidas</h4><p>Llevamos dulzura hasta tu hogar.</p></div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <h2>¿Listo para endulzar tu día?</h2>
+    <p>Escríbenos y cotizamos tu pedido personalizado.</p>
+    <a class="btn" href="https://wa.me/+59176059822?text=Hola%20Dulce%20Click%2C%20quisiera%20hacer%20un%20pedido" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+    <a class="btn" href="https://instagram.com/" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i> Instagram</a>
+  </section>
+
+  <footer>Dulce Click © 2026 | Endulzando momentos</footer>
+</main>
+</div>
+
+<button class="fab" id="fab" aria-label="Abrir carrito"><i class="fa-solid fa-cart-shopping"></i><b id="count">0</b></button>
+<div class="veil" id="veil"></div>
+<aside class="drawer" id="drawer" aria-label="Carrito">
+  <header><h3>Tu pedido</h3><button id="close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button></header>
+  <div class="items" id="items"></div>
+  <footer>
+    <div class="total"><span>Total</span><span id="total">$0</span></div>
+    <button class="btn" id="order">Pedir por WhatsApp</button>
+  </footer>
+</aside>
+<div class="modal" id="modal"><div class="box" id="box" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const PHONE = "+59176059822"; // <- cambia por tu número con código de país
+const P = [
+  {id:1,n:"Pastel de Chocolate",d:"Delicioso pastel relleno de ganache.",p:32,c:"Pasteles",t:"Más vendido",i:"photo-1571115177098-24ec42ed204d"},
+  {id:2,n:"Pastel de Fresa",d:"Bizcocho de vainilla con fresas naturales.",p:30,c:"Pasteles",i:"photo-1563729784474-d77dbb933a9e"},
+  {id:3,n:"Cupcakes (caja de 6)",d:"Sabores variados y decoración especial.",p:18,c:"Cupcakes",t:"Nuevo",i:"photo-1486427944299-d1955d23e34d"},
+  {id:4,n:"Galletas con chispas",d:"Galletas artesanales con chispas.",p:6,c:"Galletas",i:"photo-1499636136210-6f4ee915583e"},
+  {id:5,n:"Pastel de Cumpleaños",d:"Diseño y mensaje a tu gusto.",p:45,c:"Personalizados",t:"A pedido",i:"photo-1578985545062-69928b1d9587"},
+  {id:6,n:"Cupcakes de Fiesta",d:"Docena decorada para eventos.",p:34,c:"Personalizados",i:"photo-1486427944299-d1955d23e34d"},
+  {id:7,n:"Postre de Chocolate",d:"Vasito cremoso con base de bizcocho.",p:8,c:"Postres",i:"photo-1571115177098-24ec42ed204d"},
+  {id:8,n:"Galletas decoradas",d:"Figuras con glaseado, ideales de regalo.",p:12,c:"Galletas",i:"photo-1499636136210-6f4ee915583e"}
+];
+const img = i => `https://images.unsplash.com/${i}?q=80&w=700&auto=format&fit=crop`;
+const cats = ["Todos","Pasteles","Cupcakes","Postres","Galletas","Personalizados"];
+let cat="Todos", term="", cart={}, favs=new Set();
+const $ = id => document.getElementById(id);
+
+function renderChips(){
+  $("chips").innerHTML = cats.map(c=>`<button class="chip ${c===cat?'active':''}" data-c="${c}">${c}</button>`).join("");
+}
+function renderProducts(){
+  const list = P.filter(x=>(cat==="Todos"||x.c===cat)&&(x.n+x.d).toLowerCase().includes(term));
+  $("products").innerHTML = list.length ? list.map(x=>`
+    <div class="card">
+      ${x.t?`<span class="tag">${x.t}</span>`:""}
+      <button class="fav ${favs.has(x.id)?'on':''}" data-f="${x.id}" aria-label="Favorito"><i class="fa-solid fa-heart"></i></button>
+      <div class="imgbox"><img src="${img(x.i)}" alt="${x.n}" loading="lazy"></div>
+      <div class="card-content"><h3>${x.n}</h3><p>${x.d}</p>
+        <div class="price"><span>Bs${x.p}</span><button class="cart" data-a="${x.id}" aria-label="Agregar ${x.n}"><i class="fa-solid fa-cart-shopping"></i></button></div>
+      </div></div>`).join("") : `<p class="empty">No encontramos productos 🍰 Prueba con otra búsqueda.</p>`;
+}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t.h);t.h=setTimeout(()=>t.classList.remove("show"),1800)}
+function renderCart(){
+  const ids=Object.keys(cart); let total=0, n=0;
+  $("items").innerHTML = ids.length ? ids.map(id=>{const x=P.find(p=>p.id==id),q=cart[id];total+=x.p*q;n+=q;
+    return `<div class="item"><img src="${img(x.i)}" alt=""><div>${x.n}<br><small>Bs ${x.p*q}</small></div>
+    <div class="qty"><button data-m="${id}">−</button>${q}<button data-pl="${id}">+</button></div></div>`}).join("")
+    : `<p class="empty">Tu carrito está vacío 🧁</p>`;
+  $("total").textContent="Bs"+total; $("count").textContent=n;
+}
+const openCart=o=>{$("drawer").classList.toggle("open",o);$("veil").classList.toggle("open",o)};
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-c],[data-a],[data-f],[data-m],[data-pl]"); if(!t)return;
+  const d=t.dataset;
+  if(d.c){cat=d.c;renderChips();renderProducts()}
+  if(d.a){cart[d.a]=(cart[d.a]||0)+1;renderCart();toast("Agregado al carrito ✓")}
+  if(d.pl){cart[d.pl]++;renderCart()}
+  if(d.m){if(--cart[d.m]<=0)delete cart[d.m];renderCart()}
+  if(d.f){const i=+d.f;favs.has(i)?favs.delete(i):favs.add(i);t.classList.toggle("on")}
+});
+$("menu").addEventListener("click",e=>{
+  const a=e.target.closest("a"); if(!a)return;
+  if(a.id){$("sidebar").classList.remove("open");return}
+  document.querySelectorAll(".menu a").forEach(x=>x.classList.remove("active"));a.classList.add("active");
+  if(a.dataset.cat){cat=a.dataset.cat;renderChips();renderProducts()}
+  $("sidebar").classList.remove("open");
+});
+$("q").addEventListener("input",e=>{term=e.target.value.toLowerCase().trim();renderProducts()});
+$("fab").onclick=()=>openCart(true); $("close").onclick=$("veil").onclick=()=>openCart(false);
+$("burger").onclick=()=>$("sidebar").classList.toggle("open");
+$("order").onclick=()=>{
+  const ids=Object.keys(cart); if(!ids.length)return toast("Agrega algo primero 🍰");
+  let total=0; const lines=ids.map(id=>{const x=P.find(p=>p.id==id);total+=x.p*cart[id];return `• ${cart[id]} x ${x.n} (Bs${x.p*cart[id]})`});
+  const msg=`Hola Dulce Click, quiero hacer este pedido:\n${lines.join("\n")}\nTotal: Bs ${total}`;
+  window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`,"_blank");
+};
+
+/* ===== NEGOCIOS ALIADOS: publicación con código ===== */
+const OWNER_PASS="dulce2026"; // <- cambia esta clave del dueño
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const loadC=()=>{try{return JSON.parse(localStorage.getItem("dc_codes"))||[]}catch{return[]}};
+const saveC=()=>{try{localStorage.setItem("dc_codes",JSON.stringify(codes))}catch{toast("No se pudo guardar")}};
+const safeUrl=u=>/^https?:\/\//i.test(u||"")?u:"";
+let codes=loadC(), admin=false, cur=null, rows=[];
+const modal=$("modal"), box=$("box");
+const show=h=>{box.innerHTML='<button class="x" data-x aria-label="Cerrar">&times;</button>'+h;modal.classList.add("open")};
+const hide=()=>modal.classList.remove("open");
+
+function renderBiz(){
+  const list=codes.filter(c=>c.biz);
+  $("biz").innerHTML=list.length?list.map(c=>{const b=c.biz;return `<div class="card"><div class="card-content"><span class="tag2">${esc(b.cat)}</span><h3>${esc(b.name)}</h3><p>${esc(b.desc)}</p><div class="price"><span style="font-size:15px">${b.items.length} productos</span><button class="btn sm" data-bv="${esc(c.code)}">Ver catálogo</button></div></div></div>`}).join(""):`<p class="empty">Aún no hay negocios publicados. ¡Sé el primero! 🏪</p>`;
+}
+function bizView(code){
+  const c=codes.find(x=>x.code===code); if(!c||!c.biz)return; const b=c.biz;
+  const msg=encodeURIComponent(`Hola ${b.name}, vi su catálogo en Dulce Click y quisiera hacer un pedido.`);
+  show(`<h3>${esc(b.name)}</h3><p class="mut">${esc(b.cat)} · ${esc(b.desc)}</p>`+
+   b.items.map(i=>`<div class="pi">${safeUrl(i.img)?`<img src="${esc(safeUrl(i.img))}" alt="" loading="lazy">`:'<div class="ph">🍰</div>'}<div><b>${esc(i.name)}</b><br><small>${esc(i.desc)}</small></div><span>$${esc(i.price)}</span></div>`).join("")+
+   `<p style="margin-top:14px"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${esc(b.wa)}?text=${msg}">Pedir por WhatsApp</a></p>`);
+}
+function pubCode(){
+  show(`<h3>Publicar mi catálogo</h3><p class="mut">Ingresa el código que te entregó el dueño de la página. Con el mismo código podrás editar tu catálogo más adelante.</p><input id="cin" placeholder="DULCE-XXXX" autocomplete="off" aria-label="Código de acceso"><button class="btn" data-act="cgo">Validar código</button>`);
+}
+function pubForm(code){
+  cur=code; const c=codes.find(x=>x.code===code);
+  const b=c.biz||{name:"",cat:"",desc:"",wa:"",items:[{name:"",price:"",desc:"",img:""}]};
+  rows=JSON.parse(JSON.stringify(b.items));
+  show(`<h3>${c.biz?"Editar":"Crear"} mi catálogo</h3>
+   <label>Nombre del negocio<input id="fn" maxlength="40" value="${esc(b.name)}"></label>
+   <label>Rubro<input id="fc" maxlength="30" value="${esc(b.cat)}" placeholder="Ej. Panadería, Ropa, Comida"></label>
+   <label>Descripción<textarea id="fd" maxlength="140" rows="2">${esc(b.desc)}</textarea></label>
+   <label>WhatsApp con código de país<input id="fw" value="${esc(b.wa)}" placeholder="59171234567" inputmode="numeric"></label>
+   <h4>Productos</h4><div id="rows"></div>
+   <button class="btn ghost" data-act="addrow">+ Agregar producto</button><button class="btn" data-act="savebiz">Publicar</button>${c.biz?'<button class="btn danger" data-act="delbiz">Eliminar mi catálogo</button>':""}`);
+  drawRows();
+}
+function drawRows(){
+  $("rows").innerHTML=rows.map((r,i)=>`<div class="row"><input data-r="${i}" data-k="name" placeholder="Producto" maxlength="40" value="${esc(r.name)}"><input data-r="${i}" data-k="price" type="number" min="0" step="0.01" placeholder="Precio" value="${esc(r.price)}"><input data-r="${i}" data-k="desc" placeholder="Descripción corta" maxlength="80" value="${esc(r.desc)}"><input data-r="${i}" data-k="img" placeholder="URL de imagen (opcional, https://...)" value="${esc(r.img)}"><button data-act="delrow" data-i="${i}" aria-label="Quitar producto">🗑 Quitar</button></div>`).join("");
+}
+function ownerView(){
+  if(!admin){show(`<h3>Panel del dueño</h3><p class="mut">Solo el dueño puede generar códigos de autorización.</p><input id="pw" type="password" placeholder="Clave del dueño" aria-label="Clave"><button class="btn" data-act="login">Entrar</button>`);return}
+  show(`<h3>Códigos de autorización</h3><p class="mut">Genera un código y entrégalo al emprendedor que autorices.</p>
+   <div class="row2"><input id="lab" placeholder="Nombre del emprendedor (opcional)" maxlength="40"><button class="btn" data-act="gen">Generar código</button></div>`+
+   (codes.length?codes.map(c=>`<div class="pi"><div><b>${esc(c.code)}</b><br><small>${esc(c.label||"Sin nombre")} · ${c.biz?"En uso: "+esc(c.biz.name):"Disponible"}</small></div><button class="btn sm" data-act="copy" data-code="${esc(c.code)}">Copiar</button><button class="btn sm danger" data-act="revoke" data-code="${esc(c.code)}">Revocar</button></div>`).join(""):`<p class="mut">Aún no hay códigos generados.</p>`));
+}
+const openPub=e=>{if(e)e.preventDefault();pubCode()};
+const openOwner=e=>{if(e)e.preventDefault();ownerView()};
+$("openPub").onclick=$("openPub2").onclick=openPub; $("openOwner").onclick=openOwner;
+
+document.addEventListener("input",e=>{const t=e.target;if(t.dataset&&t.dataset.r!==undefined)rows[t.dataset.r][t.dataset.k]=t.value});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")hide();
+  if(e.key==="Enter"&&e.target.id==="cin")act("cgo");
+  if(e.key==="Enter"&&e.target.id==="pw")act("login");
+});
+document.addEventListener("click",e=>{
+  if(e.target===modal)return hide();
+  const t=e.target.closest("[data-act],[data-bv],[data-x]"); if(!t||!modal.contains(t)&&!t.dataset.bv)return;
+  if(t.dataset.x!==undefined)return hide();
+  if(t.dataset.bv)return bizView(t.dataset.bv);
+  act(t.dataset.act,t);
+});
+function act(a,t){
+  if(a==="cgo"){
+    const v=$("cin").value.trim().toUpperCase();
+    if(codes.some(c=>c.code===v))pubForm(v); else toast("Código no válido o revocado");
+  }
+  if(a==="addrow"){if(rows.length>=20)return toast("Máximo 20 productos");rows.push({name:"",price:"",desc:"",img:""});drawRows()}
+  if(a==="delrow"){rows.splice(+t.dataset.i,1);if(!rows.length)rows.push({name:"",price:"",desc:"",img:""});drawRows()}
+  if(a==="savebiz"){
+    const name=$("fn").value.trim(), wa=$("fw").value.replace(/\D/g,"");
+    const items=rows.filter(r=>r.name.trim()&&r.price!=="").map(r=>({name:r.name.trim(),price:+r.price||0,desc:(r.desc||"").trim(),img:(r.img||"").trim()}));
+    if(!name||wa.length<8||!items.length)return toast("Completa nombre, WhatsApp y 1 producto con precio");
+    codes.find(c=>c.code===cur).biz={name,cat:$("fc").value.trim()||"Otro",desc:$("fd").value.trim(),wa,items};
+    saveC();renderBiz();hide();toast("Catálogo publicado ✓");location.hash="#negocios";
+  }
+  if(a==="delbiz"){if(confirm("¿Eliminar tu catálogo? El código seguirá disponible.")){codes.find(c=>c.code===cur).biz=null;saveC();renderBiz();hide();toast("Catálogo eliminado")}}
+  if(a==="login"){if($("pw").value===OWNER_PASS){admin=true;ownerView()}else toast("Clave incorrecta")}
+  if(a==="gen"){
+    const al="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let code;
+    do{const r=crypto.getRandomValues(new Uint8Array(4));code="DULCE-"+[...r].map(x=>al[x%al.length]).join("")}while(codes.some(c=>c.code===code));
+    codes.push({code,label:$("lab").value.trim(),biz:null});saveC();ownerView();toast("Código generado: "+code);
+  }
+  if(a==="copy"){const c=t.dataset.code;(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>toast("Código copiado ✓")).catch(()=>toast(c))}
+  if(a==="revoke"){if(confirm("¿Revocar este código? Se eliminará también el catálogo asociado.")){codes=codes.filter(c=>c.code!==t.dataset.code);saveC();renderBiz();ownerView()}}
+}
+renderBiz();
+renderChips();renderProducts();renderCart();
+</script>
+</body>
+</html>
